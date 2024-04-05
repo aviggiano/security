@@ -4,6 +4,7 @@
 
 ### General
 
+- [x] If you don't understand the Aave codebase don't fork it [1](https://twitter.com/0xbove/status/1750103221496938953)
 - [x] Common issues from Aave forks and how to mitigate them
   - [x] [List of Aave v3 issues reported on their bug bounty program](https://governance.aave.com/t/bgd-bug-bounties-proposal/13077)
     - [x] 1. Flash loan premium not passed correctly to the receiver
