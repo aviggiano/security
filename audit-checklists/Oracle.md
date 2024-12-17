@@ -1,6 +1,6 @@
 # Oracle
 
-This table shows the configuration of the Top DeFi Lending protocols (TVL > $100m) of EVM-compatible chains for non-correlated assets
+This table shows the configuration of the Top DeFi Lending protocols (TVL > $100m) of EVM-compatible chains for non-correlated assets. Material prepared for [@SizeCredit](https://size.credit/)
 
 | Name             | TVL ($ million) | Primary Oracle                                                                 | Secondary Oracle                        | Note                                |
 |------------------|-----------------|-------------------------------------------------------------------------------|-----------------------------------------|-------------------------------------|
