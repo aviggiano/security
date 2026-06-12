@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stateful Invariant Testing"
+  short_description: "Build Chimera invariant fuzzing campaigns"
+  default_prompt: "Implement a metric-driven Chimera/create-chimera-app stateful invariant campaign for this Solidity project. Use Recon-Fuzz/chimera and recon-magic references, keep production contracts unchanged, add the standard Setup/TargetFunctions/Properties/BeforeAfter/CryticTester/CryticToFoundry harness, and validate 5-minute smoke runs on recon-fuzzer, Echidna, and Medusa plus standardized Recon coverage."

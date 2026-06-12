@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Failure Triage"
+  short_description: "Classify failing Foundry test cases"
+  default_prompt: "Run Foundry tests and classify each failing fuzz or differential test."

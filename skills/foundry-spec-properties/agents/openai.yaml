@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Spec Properties"
+  short_description: "Turn specs into Foundry properties"
+  default_prompt: "Create Foundry property tests from the protocol whitepaper or specification."

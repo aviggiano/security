@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Fuzz Mirrors"
+  short_description: "Mirror unit flows as Foundry fuzz tests"
+  default_prompt: "Create Foundry fuzz tests mirroring the unit test behavior."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Differential Tests"
+  short_description: "Compare production against reference models"
+  default_prompt: "Create Foundry differential tests against the reference implementation."

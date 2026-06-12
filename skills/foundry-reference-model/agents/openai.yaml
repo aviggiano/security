@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Reference Model"
+  short_description: "Build simple Solidity reference models"
+  default_prompt: "Create a simple independent reference implementation for differential tests."

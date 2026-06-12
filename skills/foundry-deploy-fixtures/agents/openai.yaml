@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Deploy Fixtures"
+  short_description: "Create Deploy/BaseTest fixture layers"
+  default_prompt: "Create or refactor Foundry deployment and base test fixtures."

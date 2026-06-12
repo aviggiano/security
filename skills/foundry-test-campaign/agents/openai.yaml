@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Test Campaign"
+  short_description: "Run full Foundry test campaigns"
+  default_prompt: "Run a complete multi-pass Foundry testing campaign for this Solidity project."

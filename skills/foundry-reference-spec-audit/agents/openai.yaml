@@ -1,0 +1,4 @@
+interface:
+  display_name: "Foundry Reference Spec Audit"
+  short_description: "Audit reference models against specs"
+  default_prompt: "Audit the Solidity reference implementation against the protocol specification or whitepaper."
