@@ -1,6 +1,6 @@
 ---
 name: smart-contract-report
-description: Turn supplied smart-contract audit findings and supporting evidence into a submission-ready Markdown report with a contents list, issue counts, risk matrix, ordered finding IDs, actor-based scenarios, supplied unit-test evidence, and remediation diffs.
+description: Turn smart-contract audit findings and source evidence into a submission-ready Markdown report with an issue index, ordered finding IDs, actor-based scenarios, self-contained unit-test proofs of concept, and remediation diffs.
 ---
 
 # Smart Contract Report
@@ -18,44 +18,38 @@ the destination and authorizes submission.
 - Report established issues separately from unresolved candidates. Preserve source
   finding identities in working notes when assigning presentation IDs. Merge
   duplicates only when they share the same root cause and remediation.
-- Format existing supplied PoCs without extending their exploitation capabilities.
-  Do not discover exploit paths or generate missing exploit reproducers as part of
-  report preparation. Flag missing evidence for the author; safe regression tests
-  demonstrating intended behavior may accompany remediation, clearly labeled as
-  regression evidence rather than a vulnerability PoC.
+- Preserve supplied PoCs when they accurately reproduce the finding. When a PoC is
+  missing, reconstruct the smallest self-contained unit test that demonstrates the
+  reported behavior against the reviewed revision. Keep it within the supplied
+  finding's actors, preconditions, and consequence; do not target live systems or
+  expand into unrelated exploit discovery. Validate it in an isolated copy when
+  feasible and record the command and observed result. If execution is unavailable
+  or the test does not reproduce the issue, state that clearly and keep the report
+  as a draft.
 - Preserve the distinction between observed behavior and inferred consequences.
-  If a supplied classification conflicts with the matrix, surface the conflict
-  instead of silently changing an authoritative assessment.
+  If a supplied classification conflicts with the severity rubric, surface the
+  conflict instead of silently changing an authoritative assessment.
 
 ## Report opening
 
 Use this order:
 
 1. Report title.
-2. Table of contents linking the summary, severity matrix, every issue, and any
-   appendix. Keep the contents at the beginning, directly after the title.
-3. Summary containing the total issue count and separate High, Medium, Low, and
-   Informational counts, including zeroes. Count only report entries; unresolved
-   candidates do not contribute to these totals. Follow with repository, revision,
-   and scope when available.
-4. Issue index with `Issue ID` and linked `Title` columns, ordered H/M/L/I.
-5. Severity matrix.
-6. Issue entries, ordered H/M/L/I.
-7. An optional appendix for unresolved candidates or material review limitations.
+2. Issue index with `Issue ID` and linked `Title` columns, ordered H/M/L/I. Keep
+   the index directly after the title; do not add a separate table of contents.
+3. Issue entries, ordered H/M/L/I.
+4. An optional appendix for unresolved candidates or material review limitations.
 
-A report with no established issues still includes the contents, zero counts,
-scope, and matrix. Do not equate zero findings with protocol safety.
+Do not add a separate summary/count block or severity-matrix section unless the
+user requests one. A report with no established issues still includes the index.
+Do not equate zero findings with protocol safety.
 
-## Severity matrix
+## Severity ratings
 
-Use only Low, Medium, and High for security severity, impact, and likelihood.
-Display both matrix axes in ascending order. Preserve these cell values:
-
-| Impact / Likelihood | Low | Medium | High |
-| --- | --- | --- | --- |
-| Low | Low | Low | Low |
-| Medium | Low | Medium | Medium |
-| High | Medium | High | High |
+Use only Low, Medium, and High for security severity, impact, and likelihood. Do
+not include a severity matrix in the report. Assign severity as follows: Low
+impact is Low at every likelihood; Medium impact is Low at Low likelihood and
+Medium otherwise; High impact is Medium at Low likelihood and High otherwise.
 
 Impact describes the supported consequence: High requires direct asset loss or
 compromise; Medium materially affects protocol operation, availability,
@@ -88,7 +82,7 @@ hide unresolved vulnerability candidates.
   This is a title example, not a claim about the reviewed protocol.
 - Write the concrete outcome and its cause. Prefer an actor when one is relevant.
   Avoid titles that merely name a bug class or exaggerate the supported consequence.
-- Keep IDs and titles identical in the contents, index, and entry headings.
+- Keep IDs and titles identical in the index and entry headings.
 
 ## Each issue
 
@@ -107,9 +101,9 @@ For H/M/L entries, include three bullets, each with a one-sentence explanation:
 - **Likelihood**: rating followed by the actors, permissions, and conditions needed.
 - **Impact**: rating followed by the concrete effect on assets or protocol behavior.
 
-Format each as `- **Label**: Rating: Explanation.` Severity must equal the
-matrix result. For informational entries, omit this entire risk assessment;
-the `I-` identifier and summary category establish their classification.
+Format each as `- **Label**: Rating: Explanation.` Severity must follow the
+severity rubric. For informational entries, omit this entire risk assessment;
+the `I-` identifier establishes their classification.
 
 ### Proof of Concept
 
@@ -136,17 +130,19 @@ Describe setup, relevant actions in their observed order, and the resulting
 observable consequence. Keep the scenario faithful to the supplied evidence;
 do not add an unsupported attack sequence.
 
-Immediately after the numbered scenario, include the supplied self-contained
-unit-test PoC in a language-tagged code fence. Use the project's existing test
-framework. A self-contained test includes its imports, setup, fixtures, mocks,
-helpers, and meaningful assertions, and may depend on the reviewed repository
-and its declared dependencies. It must not depend on another finding's snippet
-or undisclosed local files. Do not replace code with a file link, ellipsis, or
-invented passing result.
+Immediately after the numbered scenario, include a self-contained unit-test PoC
+in a language-tagged code fence. Use an accurate supplied PoC when available;
+otherwise reconstruct it from the finding and reviewed source. Use the project's
+existing test framework. A self-contained test includes its imports, setup,
+fixtures, mocks, helpers, and meaningful assertions, and may depend on the
+reviewed repository and its declared dependencies. It must not depend on another
+finding's snippet or undisclosed local files. Do not replace code with a file
+link, ellipsis, or an invented passing result.
 
-Include the test filename, execution command, prerequisites, and recorded
-validation result when available. Distinguish an observed successful reproduction
-from unverified source. A test confirming the fix must be labeled separately.
+Label the PoC as supplied or reconstructed. Include the test filename, execution
+command, prerequisites, and recorded validation result when available. Distinguish
+an observed successful reproduction from unverified source. A test confirming the
+fix must be labeled separately.
 If required evidence is unavailable, identify the gap and mark the report as a
 draft rather than claiming it is submission-ready.
 
@@ -169,14 +165,14 @@ a reason instead of an empty diff.
 
 Before calling the report submission-ready, check:
 
-- Contents and index links resolve to actual headings.
-- Counts equal the entries and category totals sum to the total.
+- Index links resolve to actual headings.
 - IDs are unique, consecutive, and uniformly zero-padded within each severity
   according to its total count; order is H/M/L/I.
 - Each H/M/L entry has a supported outcome-based title and three concise risk
-  explanations, with severity matching the matrix.
-- Every H/M/L issue has its numbered scenario before supplied test evidence,
-  followed by remediation. Informational entries have neither a risk assessment
-  nor a Proof of Concept section; they proceed from description to remediation.
-- Tests and patches are complete as supplied, and validation claims match
-  recorded evidence. Missing evidence and pending remediation remain visible.
+  explanations, with severity following the rubric.
+- Every H/M/L issue has its numbered scenario before its self-contained unit-test
+  evidence, followed by remediation. Informational entries have neither a risk
+  assessment nor a Proof of Concept section; they proceed from description to
+  remediation.
+- Supplied or reconstructed tests and patches are complete, and validation claims
+  match recorded evidence. Missing evidence and pending remediation remain visible.
