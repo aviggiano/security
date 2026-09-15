@@ -78,9 +78,12 @@ hide unresolved vulnerability candidates.
 
 - Stable-sort entries High, Medium, Low, Informational; preserve input order
   within each category.
-- Assign independent, consecutive counters starting at `H-01`, `M-01`, `L-01`,
-  and `I-01`. Use at least two decimal digits, not fractional numbers; after
-  `H-99`, continue with `H-100`.
+- Assign independent, consecutive counters for each severity. Choose one digit
+  width per severity from its total issue count: the greater of two digits or
+  the digits needed to represent that count. Zero-pad every ID in that severity
+  to the same width. For example, 101 High issues use `H-001` through `H-101`,
+  including `H-100`, while 12 Medium issues use `M-01` through `M-12`. Apply the
+  same rule to Low and Informational issues and update all references together.
 - Use headings shaped as `## [H-01] - Attacker can drain vault due to incorrect permissions`.
   This is a title example, not a claim about the reviewed protocol.
 - Write the concrete outcome and its cause. Prefer an actor when one is relevant.
@@ -113,11 +116,21 @@ the `I-` identifier and summary category establish their classification.
 This section applies only to H/M/L entries. Informational entries omit the
 entire Proof of Concept section, including numbered scenarios and test code.
 
-Place a short human-readable numbered scenario first. Each step names a protocol
-role and a concrete action or observation. Use roles such as Depositor, Borrower,
-Liquidator, User, Administrator, and Attacker only when they match the supplied
-finding. Distinguish multiple participants as Depositor A and Depositor B.
-Avoid anonymous variables and Alice/Bob when a role is available.
+Place a short human-readable numbered list of actor actions first, sorted in
+chronological execution order. Start each step with the actor, followed by the
+concrete action and its relevant result. Include the setup actions needed to
+understand how the final consequence occurs.
+
+Prefer **Attacker** and **Victim** when adversarial and harmed participants are
+applicable. Otherwise use the protocol's usual roles, such as Depositor, Borrower,
+Liquidator, User, or Administrator. Keep names consistent across the scenario and
+test, and distinguish multiple participants as Victim A and Victim B or Depositor
+A and Depositor B. Avoid anonymous variables and Alice/Bob when a role is available.
+
+Example of the required presentation, only when supported by the supplied finding:
+
+1. Victim deposits 100 MON into the protocol.
+2. Attacker calls `redeem` and drains the protocol.
 
 Describe setup, relevant actions in their observed order, and the resulting
 observable consequence. Keep the scenario faithful to the supplied evidence;
@@ -158,7 +171,8 @@ Before calling the report submission-ready, check:
 
 - Contents and index links resolve to actual headings.
 - Counts equal the entries and category totals sum to the total.
-- IDs are unique and consecutive within each severity; order is H/M/L/I.
+- IDs are unique, consecutive, and uniformly zero-padded within each severity
+  according to its total count; order is H/M/L/I.
 - Each H/M/L entry has a supported outcome-based title and three concise risk
   explanations, with severity matching the matrix.
 - Every H/M/L issue has its numbered scenario before supplied test evidence,
@@ -166,11 +180,3 @@ Before calling the report submission-ready, check:
   nor a Proof of Concept section; they proceed from description to remediation.
 - Tests and patches are complete as supplied, and validation claims match
   recorded evidence. Missing evidence and pending remediation remain visible.
-
-## Reference and adaptations
-
-Inspired by [Ultrafuzz's final-report guidance](https://github.com/monad-developers/ultrafuzz/blob/main/.ultrafuzz/prompts/review/final-report.md).
-This standalone format adds a full contents list, informational entries, an
-explicit severity rationale, and remediation diffs, and displays the same matrix
-with ascending axes. It does not require Ultrafuzz runtime handoffs, metadata,
-JSON schemas, or its canonical renderer. It is not a drop-in Ultrafuzz report.
