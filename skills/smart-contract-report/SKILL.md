@@ -64,7 +64,9 @@ Use this order:
    Do not invent missing usage figures; say `Not recorded` in a row when they
    are unavailable. Explain terminology and evidence limits in the relevant
    issue, without adding `Terms` or `Evidence limits` rows.
-3. Issue index with `Issue ID` and linked `Title` columns, ordered H/M/L/I.
+3. A `## Findings` heading immediately after the executive summary table,
+   followed by the issue index with `Issue ID` and linked `Title` columns,
+   ordered H/M/L/I.
 4. Issue entries, ordered H/M/L/I.
 
 Do not add a separate table of contents, severity-matrix section, or appendix.
@@ -220,6 +222,8 @@ Before calling the report submission-ready, check:
   links; Findings has accurate counts and a second context line; Methodology,
   Time, Cost, and Release decision occupy separate rows. There is no appendix
   or unexplained source-only shorthand in reader-facing prose.
+- A `## Findings` heading appears between the executive summary table and the
+  issue index; issue entry headings keep their `##` level.
 - Supplied or reconstructed tests and included patches are complete, and
   validation claims match recorded evidence. Missing evidence and pending
   remediation remain visible without repeated boilerplate or external references.
