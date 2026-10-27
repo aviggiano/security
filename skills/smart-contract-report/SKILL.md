@@ -47,13 +47,13 @@ Use this order:
    followed by one two-column table (`Item` and `Detail`). The paragraph states
    the main business exposure and release decision without test mechanics.
    Use these table rows:
-   - **Scope:** one cell naming the reviewed repository, then bullets for the
-     baseline and every reviewed branch. Give each its exact name and pinned
-     full commit hash linked to a commit permalink. Link associated pull
-     requests. Use `<br>` and `•` for bullets within the Markdown table cell.
-   - **Findings:** counts of High, Medium, Low, and Informational issues on the
-     first line, then a short, supported statement about the most significant
-     findings on a second line separated by `<br>`.
+   - **Scope:** one cell naming the reviewed repository, followed by the
+     baseline and every reviewed branch, separated by semicolons. Give each
+     its exact name and pinned full commit hash linked to a commit permalink.
+     Link associated pull requests.
+   - **Findings:** counts of High, Medium, Low, and Informational issues,
+     then a period and a short, supported sentence about the most significant
+     findings, in the same cell.
    - **Methodology:** model, harness, and relevant execution configuration when
      supplied; leave test framework and PoC details to individual issues.
    - **Time:** recorded elapsed time and the events defining its window.
@@ -68,6 +68,12 @@ Use this order:
    followed by the issue index with `Issue ID` and linked `Title` columns,
    ordered H/M/L/I.
 4. Issue entries, ordered H/M/L/I.
+
+Keep every table cell on one line of plain Markdown so the report survives
+being pasted into Notion and other editors that import Markdown tables: no
+HTML such as `<br>`, no line breaks, lists, headings, or code fences inside a
+cell. Inline code, links, and emphasis are fine. Put any detail that needs
+more structure in the issue entries instead.
 
 Do not add a separate table of contents, severity-matrix section, or appendix.
 Keep the executive summary brief and decision-oriented; put technical detail in
@@ -219,11 +225,12 @@ Before calling the report submission-ready, check:
   remediation.
 - The executive summary precedes the issue index and has one TL;DR paragraph
   and one table. Scope occupies one row with pinned commit and pull request
-  links; Findings has accurate counts and a second context line; Methodology,
+  links; Findings has accurate counts and a context sentence; Methodology,
   Time, Cost, and Release decision occupy separate rows. There is no appendix
   or unexplained source-only shorthand in reader-facing prose.
 - A `## Findings` heading appears between the executive summary table and the
   issue index; issue entry headings keep their `##` level.
+- No table cell contains HTML (such as `<br>`) or a line break.
 - Supplied or reconstructed tests and included patches are complete, and
   validation claims match recorded evidence. Missing evidence and pending
   remediation remain visible without repeated boilerplate or external references.
