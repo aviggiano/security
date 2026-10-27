@@ -32,8 +32,8 @@ the destination and authorizes submission.
 - Make the report understandable on its own. Do not refer readers to the source
   report, external documents, test files, logs, worktrees, or this skill for
   context or evidence. Required code imports inside a PoC are permitted.
-  Reviewed commit permalinks and relevant pull request permalinks are allowed
-  and required when identifying scope or discussing a pull request.
+  Pull request permalinks are allowed and required when discussing a pull
+  request in issue prose.
 - Use the final report's issue IDs for cross-references. Replace source-only
   labels or branch letters with plain feature names in reader-facing prose;
   explain any essential shorthand where it first appears.
@@ -45,22 +45,19 @@ Use this order:
 1. Report title.
 2. A short `Executive summary` with exactly one CEO-level TL;DR paragraph
    followed by one two-column table (`Item` and `Detail`). The paragraph states
-   the main business exposure and release decision without test mechanics.
+   the main business exposure without test mechanics.
    Use these table rows:
-   - **Scope:** one cell naming the reviewed repository, followed by the
-     baseline and every reviewed branch, separated by semicolons. Give each
-     its exact name and pinned full commit hash linked to a commit permalink.
-     Link associated pull requests.
-   - **Findings:** counts of High, Medium, Low, and Informational issues,
-     then a period and a short, supported sentence about the most significant
-     findings, in the same cell.
+   - **Scope:** one cell naming the reviewed repository, the files in scope,
+     context-only code, and the baseline and every reviewed branch with its
+     exact name and pinned full commit hash, separated by semicolons. Use plain
+     text: no links and no pull request references.
+   - **Findings:** counts of High, Medium, Low, and Informational issues only,
+     such as `**2 High · 4 Medium · 15 Low · 20 Informational**.`
    - **Methodology:** model, harness, and relevant execution configuration when
      supplied; leave test framework and PoC details to individual issues.
-   - **Time:** recorded elapsed time and the events defining its window.
-   - **Cost:** recorded or estimated model cost, labeled as such, with its
-     pricing basis and included work when known.
-   - **Release decision:** the affected changes to hold or prioritize when the
-     evidence supports a recommendation.
+   - **Time:** recorded elapsed time only, such as `Review run: 3 h 06 m`.
+   - **Cost:** recorded or estimated model cost only, labeled as such, such as
+     `$523.37 estimated`.
    Do not invent missing usage figures; say `Not recorded` in a row when they
    are unavailable. Explain terminology and evidence limits in the relevant
    issue, without adding `Terms` or `Evidence limits` rows.
@@ -184,7 +181,10 @@ reviewed repository and its declared dependencies. It must not depend on another
 finding's snippet or undisclosed local files. Do not replace code with a file
 link, ellipsis, or an invented passing result.
 
-Label the PoC as supplied or reconstructed. After the code, state an observed
+Do not label the PoC as supplied or reconstructed or describe how it was
+derived. When the test simplifies the real system in a way that limits what it
+proves, such as a mock standing in for a live contract or a disabled check,
+state that limit in one plain sentence. After the code, state an observed
 validation result in one short sentence when it has been verified. Do not list
 test file paths, commands, logs, or evidence-packaging instructions in the report.
 Distinguish an observed successful reproduction from unverified source, and label
@@ -224,13 +224,14 @@ Before calling the report submission-ready, check:
   assessment nor a Proof of Concept section; they proceed from description to
   remediation.
 - The executive summary precedes the issue index and has one TL;DR paragraph
-  and one table. Scope occupies one row with pinned commit and pull request
-  links; Findings has accurate counts and a context sentence; Methodology,
-  Time, Cost, and Release decision occupy separate rows. There is no appendix
+  and one table. Scope occupies one plain-text row with pinned commit hashes;
+  Findings has accurate counts only; Methodology, Time, and Cost occupy
+  separate rows. There is no Release decision row and no appendix
   or unexplained source-only shorthand in reader-facing prose.
 - A `## Findings` heading appears between the executive summary table and the
   issue index; issue entry headings keep their `##` level.
 - No table cell contains HTML (such as `<br>`) or a line break.
-- Supplied or reconstructed tests and included patches are complete, and
+- No PoC carries a supplied or reconstructed label.
+- Tests and included patches are complete, and
   validation claims match recorded evidence. Missing evidence and pending
   remediation remain visible without repeated boilerplate or external references.
